@@ -12,10 +12,9 @@ export default function P12PassChange(){
     setLoading(true);
     try{
       const fileInput = e.target.querySelector('input[name="file"]');
-      const fileUrl = form.get("file");
+      const fileUrl = form.get("file_url");
       if(fileInput && fileInput.files && fileInput.files.length){
         const f = fileInput.files[0];
-        if(!/\.p12$/i.test(f.name)) throw new Error("Uploaded file must have .p12 extension");
       } else if(fileUrl && !/^https?:\/\/.+\.p12(\?.*)?$/i.test(fileUrl)){
         throw new Error("P12 URL must be an HTTP(S) URL pointing to a .p12 file");
       }
