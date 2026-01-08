@@ -38,12 +38,22 @@ export default async function handler(req,res){
     const apiKey = process.env.COCO_API_KEY;
     if(!apiKey) return res.status(500).json({error:"Server missing COCO_API_KEY"});
     const form = new FormData();
-    if(fields.ipa_url) await headCheckSize(fields.ipa_url);
-    if(fields.ipa_url) form.append("ipa", fields.ipa_url);
+    const ipaUrlField = fields.ipa_url || fields.ipa;
+    if(ipaUrlField){
+      const ipaUrl = ipaUrlField.toString();
+      if(/^https?:\/\/.+\.ipa(\?.*)?$/i.test(ipaUrl)){
+        await headCheckSize(ipaUrl);
+        form.append("ipa", ipaUrl);
+      } else {
+        return res.status(400).json({error:"ipa_url must be a valid HTTP(S) URL pointing to a .ipa file"});
+      }
+    }
     if(files.ipa){
       const ipa = files.ipa;
+      const name = ipa.originalFilename || ipa.newFilename || "";
+      if(!/\.ipa$/i.test(name)) return res.status(400).json({error:"Uploaded IPA must have .ipa extension"});
       if(ipa.size && ipa.size > MAX_IPA_BYTES) return res.status(400).json({error:"Uploaded IPA exceeds size limit (1.10 GB)."});
-      form.append("ipa", fs.createReadStream(ipa.filepath), { filename: ipa.originalFilename || ipa.newFilename });
+      form.append("ipa", fs.createReadStream(ipa.filepath), { filename: name });
     }
     if(!files.cert) return res.status(400).json({error:"Missing cert file"});
     if(!files.provision) return res.status(400).json({error:"Missing provision file"});
