@@ -1,7 +1,6 @@
 import formidable from "formidable";
 import FormData from "form-data";
 import fs from "fs";
-import fetch from "node-fetch";
 export const config = { api: { bodyParser: false } };
 function parseForm(req){ return new Promise((res,rej)=>{
   const f = formidable({ multiples:false, keepExtensions:true });
