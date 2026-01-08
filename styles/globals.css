@@ -135,6 +135,16 @@ input[type="file"]{
   margin-top:8px;
   margin-bottom:12px;
 }
+.nav button{
+  color:rgba(255,255,255,0.9);
+  text-decoration:none;
+  padding:10px 14px;
+  border-radius:10px;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+  border:none;
+  cursor:pointer;
+  font-weight:700;
+}
 .nav a{
   color:rgba(255,255,255,0.78);
   text-decoration:none;
