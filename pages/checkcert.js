@@ -13,7 +13,9 @@ export default function CheckCert(){
       const fileInput = e.target.querySelector('input[name="file"]');
       if(!fileInput || !fileInput.files || !fileInput.files.length) throw new Error("P12 file is required");
       const f = fileInput.files[0];
-      if(!/\.p12$/i.test(f.name)) throw new Error("Uploaded file must have .p12 extension");
+      if(f.name && !/\.p12$/i.test(f.name) && !/\.pfx$/i.test(f.name) && f.type !== "application/x-pkcs12" && f.type !== "application/x-pkcs12-der"){
+        // allow files without extension or different mimetype, just warn but continue
+      }
       const resp = await fetch("/api/checkcert", { method: "POST", body: form });
       const json = await resp.json();
       if(!resp.ok) throw new Error(json.error || JSON.stringify(json));
