@@ -3,10 +3,8 @@ import FormData from "form-data";
 import fs from "fs";
 import {MAX_IPA_BYTES} from "./_utils";
 export const config = { api: { bodyParser: false } };
-function parseForm(req){ return new Promise((res,rej)=>{
-  const f = formidable({ multiples:false, keepExtensions:true });
-  f.parse(req,(err,fields,files)=> err? rej(err) : res({fields,files}));
-});}
+function parseForm(req){ return new Promise((res,rej)=>{ const f = formidable({ multiples:false, keepExtensions:true }); f.parse(req,(err,fields,files)=> err? rej(err) : res({fields,files})); });}
+function getFilePath(f){ if(!f) return undefined; return f.filepath || f.path || f.filePath || f.tempFilePath || f.tempfilepath || undefined; }
 async function headCheckSize(sessionUrl){
   try{
     const r = await fetch(sessionUrl, { method: "HEAD", redirect:"follow" });
@@ -48,12 +46,15 @@ export default async function handler(req,res){
         return res.status(400).json({error:"ipa_url must be a valid HTTP(S) URL pointing to a .ipa file"});
       }
     }
-    if(files.ipa){
+    if(files && files.ipa){
       const ipa = files.ipa;
-      const name = ipa.originalFilename || ipa.newFilename || "";
+      const name = ipa.originalFilename || ipa.newFilename || ipa.filename || "upload.ipa";
       if(!/\.ipa$/i.test(name)) return res.status(400).json({error:"Uploaded IPA must have .ipa extension"});
-      if(ipa.size && ipa.size > MAX_IPA_BYTES) return res.status(400).json({error:"Uploaded IPA exceeds size limit (1.10 GB)."});
-      form.append("ipa", fs.createReadStream(ipa.filepath), { filename: name });
+      const path = getFilePath(ipa);
+      if(!path) return res.status(500).json({error:"Uploaded IPA file path missing on server"});
+      const stat = fs.statSync(path);
+      if(stat.size && stat.size > MAX_IPA_BYTES) return res.status(400).json({error:"Uploaded IPA exceeds size limit (1.10 GB)."});
+      form.append("ipa", fs.createReadStream(path), { filename: name });
     }
     if(fields.bundleId) form.append("bundleId", fields.bundleId);
     if(fields.bundleName) form.append("bundleName", fields.bundleName);
@@ -62,6 +63,7 @@ export default async function handler(req,res){
     const text = await response.text();
     let parsed;
     try{ parsed = JSON.parse(text); } catch(e){ parsed = { raw: text }; }
+    if(!response.ok) return res.status(response.status).json({ status: response.status, body: parsed });
     res.status(response.status).json(parsed);
   }catch(err){
     res.status(500).json({ error: err.message || String(err) });
