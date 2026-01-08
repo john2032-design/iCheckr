@@ -20,21 +20,39 @@ export default function CheckCert(){
     }
   }
   return (
-    <main style={{fontFamily:"Inter,system-ui,Arial",padding:24,maxWidth:900,margin:"0 auto"}}>
-      <h1>Certificate Check</h1>
-      <form onSubmit={submit}>
-        <label>Certificate (.p12) file<br/><input name="file" type="file" accept=".p12,application/x-pkcs12" required/></label>
-        <label>Password (required for p12)<br/><input name="password" type="text" required/></label>
-        <div style={{marginTop:12}}>
-          <button disabled={loading} type="submit">{loading? "Validating..." : "Validate Certificate"}</button>
+    <main className="container">
+      <header className="header">
+        <div className="logo-wrap">
+          <div className="logo">
+            <img src="https://raw.githubusercontent.com/john2032-design/iCheckr/refs/heads/main/562B424C-4E28-41A0-AB8C-589C5F25D7B5.png" alt="iCheckr" style={{width:46,height:46,borderRadius:8}}/>
+          </div>
+          <div>
+            <div className="title">Certificate Check</div>
+            <div className="subtitle">Validate P12 files and OCSP status</div>
+          </div>
         </div>
-      </form>
-      <hr/>
-      {error && <div style={{color:"crimson"}}>{error}</div>}
-      {result && <div>
-        <h3>Result</h3>
-        <pre style={{whiteSpace:"pre-wrap",background:"#f6f6f6",padding:12}}>{JSON.stringify(result,null,2)}</pre>
-      </div>}
+      </header>
+      <section className="card">
+        <form onSubmit={submit}>
+          <div className="form-row">
+            <label>Certificate (.p12) file</label>
+            <input name="file" type="file" accept=".p12,application/x-pkcs12" required/>
+          </div>
+          <div className="form-row">
+            <label>Password (required for p12)</label>
+            <input name="password" type="text" required/>
+          </div>
+          <div style={{display:"flex",gap:12}}>
+            <button className="button" disabled={loading} type="submit">{loading? "Validating..." : "Validate Certificate"}</button>
+            <button className="small" type="button" onClick={()=>{navigator.clipboard?.writeText(window.location.href)}}>Copy Page Link</button>
+          </div>
+        </form>
+        {error && <div className="result" style={{color:"#ffb4c9"}}>{error}</div>}
+        {result && <div className="result">
+          <pre className="code">{JSON.stringify(result,null,2)}</pre>
+        </div>}
+      </section>
+      <div className="footer">iCheckr • Neon UI</div>
     </main>
   )
 }
