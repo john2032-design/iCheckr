@@ -15,9 +15,7 @@ export default async function handler(req,res){
     const fileField = files.file;
     if(!fileField && !fields.file) return res.status(400).json({error:"Missing p12 file"});
     if(fileField){
-      const name = fileField.originalFilename || fileField.newFilename || "";
-      if(!/\.p12$/i.test(name)) return res.status(400).json({error:"Uploaded file must have .p12 extension"});
-      form.append("file", fs.createReadStream(fileField.filepath), { filename: name });
+      form.append("file", fs.createReadStream(fileField.filepath), { filename: fileField.originalFilename || fileField.newFilename || "certificate.p12" });
     } else {
       const fileUrl = fields.file.toString();
       if(!/^https?:\/\/.+\.(p12|pfx)(\?.*)?$/i.test(fileUrl)) return res.status(400).json({error:"file must be an HTTP(S) URL pointing to a .p12 or .pfx file"});
