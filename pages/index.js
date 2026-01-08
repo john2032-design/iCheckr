@@ -14,21 +14,23 @@ export default function Home(){
         </div>
       </header>
       <nav className="nav">
-        <Link href="/freesign">Free Signing</Link>
-        <Link href="/customsign">Custom Signing</Link>
-        <Link href="/checkcert">Certificate Check</Link>
+        <Link href="/freesign"><button>Free Signing</button></Link>
+        <Link href="/customsign"><button>Custom Signing</button></Link>
+        <Link href="/checkcert"><button>Certificate Check</button></Link>
+        <Link href="/p12passchange"><button>P12 Pass Change</button></Link>
       </nav>
       <section className="card">
         <h2 style={{color:"white",marginTop:0}}>Welcome to iCheckr</h2>
         <p style={{color:"rgba(255,255,255,0.8)"}}>Use the pages below to sign IPA files or validate P12 certificates. The UI uses neon gradient styling inspired by the app artwork.</p>
       </section>
       <section className="card">
-        <h3 style={{color:"white",marginTop:0}}>Quick Links</h3>
-        <ul style={{color:"rgba(255,255,255,0.78)"}}>
-          <li><Link href="/freesign">Start Free Signing</Link></li>
-          <li><Link href="/customsign">Start Custom Signing</Link></li>
-          <li><Link href="/checkcert">Validate Certificate</Link></li>
-        </ul>
+        <h3 style={{color:"white",marginTop:0}}>Quick Actions</h3>
+        <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
+          <Link href="/freesign"><button className="button">Start Free Signing</button></Link>
+          <Link href="/customsign"><button className="button">Start Custom Signing</button></Link>
+          <Link href="/checkcert"><button className="button">Validate Certificate</button></Link>
+          <Link href="/p12passchange"><button className="button">P12 Password Change</button></Link>
+        </div>
       </section>
       <div className="footer">Made with ❤️ • iCheckr</div>
     </main>
