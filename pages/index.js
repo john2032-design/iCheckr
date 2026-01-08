@@ -13,12 +13,6 @@ export default function Home(){
           </div>
         </div>
       </header>
-      <nav className="nav">
-        <Link href="/freesign"><button>Free Signing</button></Link>
-        <Link href="/customsign"><button>Custom Signing</button></Link>
-        <Link href="/checkcert"><button>Certificate Check</button></Link>
-        <Link href="/p12passchange"><button>P12 Pass Change</button></Link>
-      </nav>
       <section className="card">
         <h2 style={{color:"white",marginTop:0}}>Welcome to iCheckr</h2>
         <p style={{color:"rgba(255,255,255,0.8)"}}>Use the pages below to sign IPA files or validate P12 certificates. The UI uses neon gradient styling inspired by the app artwork.</p>
