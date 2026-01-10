@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iCheckr - IPA Signer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>iCheckr - IPA Signer</h1>
+    </header>
+    <main>
+        <form id="signForm">
+            <div class="input-group">
+                <label>IPA Source:</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="ipaType" value="file" checked> Upload File
+                    </label>
+                    <label>
+                        <input type="radio" name="ipaType" value="url"> Enter URL
+                    </label>
+                </div>
+            </div>
+            <div class="input-group" id="fileInput">
+                <label for="ipaFile">IPA File:</label>
+                <input type="file" id="ipaFile" name="ipa" accept=".ipa">
+            </div>
+            <div class="input-group" id="urlInput" style="display: none;">
+                <label for="ipaUrl">IPA URL:</label>
+                <input type="text" id="ipaUrl" name="ipa" placeholder="https://example.com/app.ipa">
+            </div>
+            <div class="input-group">
+                <label for="bundleId">Bundle ID (Optional):</label>
+                <input type="text" id="bundleId" name="bundleId" placeholder="com.example.app">
+            </div>
+            <div class="input-group">
+                <label for="bundleName">Bundle Name (Optional):</label>
+                <input type="text" id="bundleName" name="bundleName" placeholder="Example App">
+            </div>
+            <div class="input-group">
+                <label>
+                    <input type="checkbox" name="bypassapplerevokes" value="true" checked> Bypass Apple Revokes
+                </label>
+            </div>
+            <button type="submit">Sign IPA</button>
+        </form>
+        <div id="result" style="display: none;">
+            <h2>Signing Result</h2>
+            <p id="message"></p>
+            <a id="installButton" class="install-btn" style="display: none;">Install</a>
+            <p id="error" style="color: red;"></p>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
