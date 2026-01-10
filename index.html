@@ -4,131 +4,139 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>iCheckr - IPA Signer</title>
-
-  <link rel="icon" type="image/png" sizes="256x256"
-        href="https://raw.githubusercontent.com/john2032-design/iCheckr/refs/heads/main/562B424C-4E28-41A0-AB8C-589C5F25D7B5.png">
-  <link rel="apple-touch-icon"
-        href="https://raw.githubusercontent.com/john2032-design/iCheckr/refs/heads/main/562B424C-4E28-41A0-AB8C-589C5F25D7B5.png">
-
+  <link rel="icon" type="image/png" sizes="256x256" href="https://raw.githubusercontent.com/john2032-design/iCheckr/refs/heads/main/562B424C-4E28-41A0-AB8C-589C5F25D7B5.png">
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/john2032-design/iCheckr/refs/heads/main/562B424C-4E28-41A0-AB8C-589C5F25D7B5.png">
   <meta name="theme-color" content="#7afcff">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="iCheckr - IPA Signer">
-  <meta name="twitter:description"
-        content="Sign iOS IPA files quickly with our pre-configured enterprise certificate.">
-  <meta name="twitter:image"
-        content="https://raw.githubusercontent.com/john2032-design/iCheckr/refs/heads/main/562B424C-4E28-41A0-AB8C-589C5F25D7B5.png">
+  <meta name="twitter:description" content="Sign iOS IPA files quickly with our pre-configured enterprise certificate.">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/john2032-design/iCheckr/refs/heads/main/562B424C-4E28-41A0-AB8C-589C5F25D7B5.png">
   <meta name="twitter:url" content="https://icheckr.pages.dev">
-
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap"
-        rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg1:#2b0057;
-      --bg2:#6b2bff;
-      --accent:#7afcff;
-      --accent2:#ff76d6;
-      --muted:rgba(230,230,255,0.7);
-      --card-radius:12px;
+      --bg1: #2b0057;
+      --bg2: #6b2bff;
+      --accent: #7afcff;
+      --accent2: #ff76d6;
+      --muted: rgba(230,230,255,0.7);
+      --card-radius: 12px;
+      --container-padding: 18px;
+      --status-width: 360px;
+      --mobile-top-height: 64px;
     }
-    html,body{
-      height:100%;
-      margin:0;
-      font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    body{
       background:
-        radial-gradient(1200px 600px at 10% 20%,rgba(122,252,255,0.03),transparent 10%),
-        radial-gradient(900px 500px at 90% 80%,rgba(255,118,214,0.03),transparent 10%),
-        linear-gradient(180deg,var(--bg1),#2b1e62 20%,var(--bg2));
+        radial-gradient(1200px 600px at 10% 20%, rgba(122,252,255,0.03), transparent 10%),
+        radial-gradient(900px 500px at 90% 80%, rgba(255,118,214,0.03), transparent 10%),
+        linear-gradient(180deg,var(--bg1), #2b1e62 20%, var(--bg2));
       color:#e6e6ff;
       display:flex;
-      align-items:center;
+      align-items:flex-start;
       justify-content:center;
       padding:18px;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      overflow:auto;
       min-height:100vh;
+      overflow:auto;
+      padding-top:18px;
     }
     .container{
       width:100%;
       max-width:1100px;
-      background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
       border-radius:16px;
-      padding:18px;
-      box-shadow:0 12px 40px rgba(0,0,0,0.6),0 0 80px rgba(122,252,255,0.03);
-      border:1px solid rgba(255,255,255,0.04);
+      padding:var(--container-padding);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 80px rgba(122,252,255,0.03);
+      border: 1px solid rgba(255,255,255,0.04);
       position:relative;
-      overflow:hidden;
+      overflow:visible;
+      margin-bottom:32px;
+      min-width:0;
     }
     .container::before{
       content:"";
       position:absolute;
       inset:0;
       background-image:
-        radial-gradient(circle at 20% 30%,rgba(255,255,255,0.03) 0.6px,transparent 0.6px),
-        radial-gradient(circle at 80% 60%,rgba(255,255,255,0.02) 0.7px,transparent 0.7px);
-      background-size:40px 40px,60px 60px;
-      mix-blend-mode:overlay;
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.03) 0.6px, transparent 0.6px),
+        radial-gradient(circle at 80% 60%, rgba(255,255,255,0.02) 0.7px, transparent 0.7px);
+      background-size: 40px 40px, 60px 60px;
+      mix-blend-mode: overlay;
       pointer-events:none;
+      border-radius:16px;
     }
-    .header{
+    .header {
       display:flex;
       gap:14px;
       align-items:center;
       margin-bottom:12px;
       flex-wrap:wrap;
+      min-width:0;
     }
-    .logo{
+    .logo {
       width:72px;
       height:72px;
       border-radius:14px;
-      background:linear-gradient(135deg,var(--accent2),var(--accent));
+      background: linear-gradient(135deg,var(--accent2),var(--accent));
       display:flex;
       align-items:center;
       justify-content:center;
       color:#081221;
       font-weight:800;
       font-size:22px;
-      box-shadow:0 8px 30px rgba(122,252,255,0.08);
-      border:1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 30px rgba(122,252,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
       flex-shrink:0;
+      overflow:hidden;
     }
+    .logo img{width:92%;height:92%;object-fit:contain;border-radius:10px;display:block}
     .title{
       font-size:20px;
       font-weight:800;
       letter-spacing:0.4px;
       line-height:1;
-      background:linear-gradient(90deg,#e9f9ff,#ffd0ff);
+      background: linear-gradient(90deg, #e9f9ff, #ffd0ff);
       -webkit-background-clip:text;
       -webkit-text-fill-color:transparent;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:calc(100% - 92px);
     }
-    .subtitle{color:var(--muted);margin-top:4px;font-size:12px}
+    .subtitle{color:var(--muted);margin-top:4px;font-size:12px;max-width:720px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     main{
       display:grid;
-      grid-template-columns:1fr;
+      grid-template-columns: 1fr var(--status-width);
       gap:14px;
       align-items:start;
+      min-height:240px;
+      width:100%;
     }
     .card{
-      background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
       padding:12px;
       border-radius:var(--card-radius);
       border:1px solid rgba(255,255,255,0.03);
-      box-shadow:0 6px 20px rgba(0,0,0,0.45);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+      min-width:0;
     }
     label{display:block;font-size:13px;color:rgba(230,230,255,0.88);margin-bottom:6px}
-    .field{margin-bottom:10px}
-    input[type="text"],input[type="url"],.file-drop{
+    .field{margin-bottom:10px;min-width:0}
+    input[type="text"], input[type="url"], .file-drop {
       width:100%;
-      padding:12px 14px;
+      padding:11px 12px;
       border-radius:10px;
       border:1px solid rgba(255,255,255,0.06);
-      background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0));
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
       color:#e9e9ff;
       font-size:14px;
       outline:none;
+      min-width:0;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
-    .file-row{display:flex;gap:8px;align-items:center}
+    .file-row{display:flex;gap:8px;align-items:center;min-width:0}
     .file-drop{
       flex:1;
       min-height:52px;
@@ -138,23 +146,24 @@
       text-align:center;
       cursor:pointer;
       user-select:none;
+      border-radius:10px;
     }
     .btn{
       display:inline-flex;
       gap:8px;
       align-items:center;
       justify-content:center;
-      padding:10px 14px;
+      padding:9px 12px;
       border-radius:10px;
-      border:none;
+      border: none;
       cursor:pointer;
       font-weight:600;
       color:#081221;
-      background:linear-gradient(90deg,var(--accent),var(--accent2));
-      box-shadow:0 8px 30px rgba(122,252,255,0.12);
-      transition:transform .12s ease,box-shadow .12s ease,opacity .12s;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      box-shadow: 0 8px 30px rgba(122,252,255,0.12);
+      transition: transform .12s ease, box-shadow .12s ease, opacity .12s;
       font-size:14px;
-      min-height:44px;
+      white-space:nowrap;
     }
     .btn:active{transform:translateY(1px)}
     .btn[disabled]{opacity:0.6;cursor:default}
@@ -170,6 +179,7 @@
       gap:8px;
       flex-wrap:wrap;
       align-items:center;
+      min-width:0;
     }
     .checkbox{
       display:flex;
@@ -179,18 +189,22 @@
       color:rgba(230,230,255,0.85);
     }
     .checkbox input{width:16px;height:16px}
-    .status{
-      position:static;
+    .status {
+      position:sticky;
+      top:16px;
+      height: fit-content;
+      min-width:0;
     }
     .info-block{
       padding:12px;
       border-radius:12px;
-      background:linear-gradient(180deg,rgba(255,255,255,0.018),rgba(255,255,255,0.008));
+      background: linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.008));
       border:1px solid rgba(255,255,255,0.03);
+      overflow:auto;
     }
-    .result-field{display:flex;justify-content:space-between;align-items:center;margin:8px 0}
-    .muted{color:rgba(230,230,255,0.6);font-size:13px}
-    .strong{font-weight:700;color:#fff}
+    .result-field{display:flex;justify-content:space-between;align-items:center;margin:8px 0;gap:8px}
+    .muted{color:rgba(230,230,255,0.6);font-size:13px;word-break:break-word}
+    .strong{font-weight:700;color:#fff;word-break:break-word}
     .badge{
       display:inline-block;
       padding:6px 10px;
@@ -198,70 +212,81 @@
       font-weight:700;
       background:linear-gradient(90deg,#11d3ff,#8a2bff);
       color:#061020;
-      box-shadow:0 8px 30px rgba(122,252,255,0.08);
+      box-shadow: 0 8px 30px rgba(122,252,255,0.08);
       font-size:13px;
     }
     .revoked{
-      background:linear-gradient(90deg,#ff8c8c,#ff3f3f);
+      background: linear-gradient(90deg, #ff8c8c, #ff3f3f);
       color:#120000;
       padding:8px 10px;
       border-radius:10px;
       font-weight:700;
       font-size:13px;
     }
-    pre{white-space:pre-wrap;font-size:13px;color:rgba(200,200,255,0.95);}
+    pre{white-space:pre-wrap;font-size:13px;color:rgba(200,200,255,0.95);max-height:220px;overflow:auto;word-break:break-word}
     .progress{
       height:10px;
       background:rgba(255,255,255,0.03);
       border-radius:999px;
-      overflow:hidden;
-      margin-top:8px;
+      overflow:hidden;margin-top:8px;
     }
-    .progress>span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .25s ease}
+    .progress > span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .25s ease}
     footer{margin-top:12px;color:rgba(230,230,255,0.55);font-size:13px}
-    .mobile-top{
-      display:flex;
+    .mobile-top {
+      display:none;
       position:sticky;
       top:0;
       z-index:40;
       width:100%;
-      background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0));
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
       border-bottom:1px solid rgba(255,255,255,0.03);
       padding:8px 12px;
       align-items:center;
       gap:8px;
+      height:var(--mobile-top-height);
+      min-height:var(--mobile-top-height);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
     }
     .mobile-top .m-logo{width:40px;height:40px;border-radius:8px;flex-shrink:0;overflow:hidden}
-    .mobile-top .m-title{font-weight:700;font-size:16px;line-height:1;margin-left:6px}
+    .mobile-top .m-logo img{width:100%;height:100%;object-fit:cover;border-radius:6px;display:block}
+    .mobile-top .m-title{font-weight:700;font-size:16px;line-height:1;margin-left:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .mobile-top .m-toggle{margin-left:auto;background:transparent;border:0;color:var(--accent);font-weight:700;padding:6px;border-radius:8px}
-    @media(min-width:821px){
-      .mobile-top{display:none}
-      .header{display:flex}
+    @media(max-width:1000px){
+      main{grid-template-columns:1fr calc(var(--status-width) - 40px)}
+      .logo{width:64px;height:64px}
+      .title{font-size:18px}
     }
     @media(max-width:820px){
+      .mobile-top{display:flex}
+      .header{display:none}
+      body{padding-top:calc(var(--mobile-top-height) + 12px)}
       .container{padding:10px}
-      .logo{display:none}
       main{grid-template-columns:1fr;gap:12px}
+      .status{position:static;top:auto}
       .card{padding:10px}
+      .logo{display:none}
+      .info-block{max-height:none}
     }
     @media(max-width:420px){
+      .mobile-top{padding:8px}
       .m-title{font-size:15px}
       .btn{padding:8px 10px;font-size:13px}
-      input[type="text"],input[type="url"],.file-drop{padding:10px;font-size:13px}
+      input[type="text"], input[type="url"], .file-drop{padding:10px;font-size:13px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      .btn, .progress > span{transition:none}
     }
   </style>
 </head>
 <body>
-  <div class="mobile-top" id="mobileTop">
+  <div class="mobile-top" id="mobileTop" aria-hidden="false">
     <div class="m-logo">
-      <img src="https://raw.githubusercontent.com/john2032-design/iCheckr/refs/heads/main/562B424C-4E28-41A0-AB8C-589C5F25D7B5.png"
-           alt="iCheckr" style="width:100%;height:100%;object-fit:cover;border-radius:6px">
+      <img src="https://raw.githubusercontent.com/john2032-design/iCheckr/refs/heads/main/562B424C-4E28-41A0-AB8C-589C5F25D7B5.png" alt="iCheckr">
     </div>
-    <div style="display:flex;flex-direction:column;min-width:0">
+    <div style="display:flex;flex-direction:column;min-width:0;overflow:hidden">
       <div class="m-title">iCheckr — IPA Signer</div>
-      <div id="mobileDetails" style="font-size:12px;color:var(--muted);margin-top:3px;display:none">
-        Sign iOS IPA files • 10,000 reqs/week
-      </div>
+      <div id="mobileDetails" style="font-size:12px;color:var(--muted);margin-top:3px;display:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Sign iOS IPA files • 10,000 reqs/week</div>
     </div>
     <button id="mobileToggle" class="m-toggle" aria-expanded="false" aria-controls="mobileDetails">Details</button>
   </div>
@@ -269,22 +294,19 @@
   <div class="container" role="main">
     <div class="header" role="banner">
       <div class="logo" aria-hidden="true">
-        <img src="https://raw.githubusercontent.com/john2032-design/iCheckr/refs/heads/main/562B424C-4E28-41A0-AB8C-589C5F25D7B5.png"
-             alt="iCheckr" style="width:92%;height:92%;object-fit:contain;border-radius:10px">
+        <img src="https://raw.githubusercontent.com/john2032-design/iCheckr/refs/heads/main/562B424C-4E28-41A0-AB8C-589C5F25D7B5.png" alt="iCheckr">
       </div>
-      <div style="min-width:0">
+      <div style="min-width:0;overflow:hidden">
         <div class="title">iCheckr <span style="font-weight:600;color:rgba(255,255,255,0.85);font-size:12px">- IPA Signer</span></div>
-        <div class="subtitle">Sign iOS IPA files quickly with our pre‑configured enterprise certificate.
-          <span class="small">Limit: 10,000 reqs/week (Standard)</span>
-        </div>
+        <div class="subtitle">Sign iOS IPA files quickly with our pre-configured enterprise certificate. <span class="small">Limit: 10,000 reqs/week (Standard)</span></div>
       </div>
     </div>
 
     <main>
       <section class="card" aria-label="Sign IPA">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:10px">
-          <div style="font-weight:700;font-size:15px">Sign an IPA</div>
-          <div class="small">Endpoint: <span style="color:var(--accent)">POST /api/v2/free-enterprise/sign</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:10px;min-width:0">
+          <div style="font-weight:700;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Sign an IPA</div>
+          <div class="small" style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Endpoint: <span style="color:var(--accent)">POST /api/v2/free-enterprise/sign</span></div>
         </div>
 
         <div class="field">
@@ -293,19 +315,19 @@
         </div>
 
         <div class="field" style="display:flex;gap:8px;align-items:center">
-          <div style="flex:1">
+          <div style="flex:1;min-width:0">
             <label class="small" style="margin-bottom:6px">Upload mode</label>
             <div style="display:flex;gap:8px">
-              <button id="modeFile" class="btn" style="flex:1;background:linear-gradient(90deg,var(--accent),var(--accent2));">Choose File</button>
+              <button id="modeFile" class="btn" style="flex:1">Choose File</button>
               <button id="modeUrl" class="btn btn-ghost" style="flex:1">Use URL</button>
             </div>
           </div>
         </div>
 
         <div class="field" id="fileBlock">
-          <label>Upload IPA file</label>
+          <label for="ipaFile">Upload IPA file</label>
           <div class="file-row">
-            <label class="file-drop" for="ipaFile" aria-hidden="true">
+            <label class="file-drop" for="ipaFile" aria-hidden="true" tabindex="0">
               <input id="ipaFile" type="file" accept=".ipa" style="display:none" />
               <div style="pointer-events:none">
                 <div style="font-weight:700">Tap to choose .ipa</div>
@@ -322,11 +344,11 @@
         </div>
 
         <div class="field options" style="margin-top:6px">
-          <div style="flex:1">
+          <div style="flex:1;min-width:0">
             <label for="bundleId">New Bundle ID (optional)</label>
             <input id="bundleId" type="text" placeholder="com.example.app" />
           </div>
-          <div style="width:160px">
+          <div style="width:160px;min-width:120px">
             <label for="bundleName">New Bundle Name (optional)</label>
             <input id="bundleName" type="text" placeholder="Example App" />
           </div>
@@ -345,14 +367,14 @@
         <div class="progress" style="margin-top:12px;display:none" id="progressBar"><span></span></div>
       </section>
 
-      <aside class="status">
+      <aside class="status" aria-label="Status panel">
         <div class="info-block card">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;min-width:0">
+            <div style="min-width:0;overflow:hidden">
               <div style="font-weight:700">Status</div>
               <div class="muted">API response & links</div>
             </div>
-            <div id="statusBadge" class="badge">Idle</div>
+            <div id="statusBadge" class="badge" style="white-space:nowrap">Idle</div>
           </div>
 
           <div style="margin-top:10px">
@@ -362,13 +384,13 @@
 
             <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:10px 0">
 
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;min-width:0">
+              <div style="min-width:0;overflow:hidden">
                 <div class="muted">Certificate</div>
                 <div id="certName" class="strong">—</div>
                 <div id="certStatus" style="margin-top:6px"></div>
               </div>
-              <div style="text-align:right">
+              <div style="text-align:right;min-width:0;overflow:hidden">
                 <div class="muted">App</div>
                 <div id="bundleInfo" class="muted">—</div>
                 <div id="appSize" class="small" style="margin-top:6px"></div>
@@ -383,7 +405,7 @@
 
             <div style="margin-top:12px">
               <div style="font-weight:700;margin-bottom:6px">Raw Response</div>
-              <pre id="raw" style="height:140px;overflow:auto">—</pre>
+              <pre id="raw">—</pre>
             </div>
           </div>
         </div>
@@ -396,187 +418,229 @@
   </div>
 
 <script>
-  const ENDPOINT='https://cococloud-signing.online/api/v2/free-enterprise/sign';
-  const fileInput=document.getElementById('ipaFile');
-  const ipaUrlInput=document.getElementById('ipaUrl');
-  const bundleIdInput=document.getElementById('bundleId');
-  const bundleNameInput=document.getElementById('bundleName');
-  const bypassCheckbox=document.getElementById('bypass');
-  const submitBtn=document.getElementById('submitBtn');
-  const apiKeyInput=document.getElementById('apiKey');
-  const clearBtn=document.getElementById('clearFile');
-  const progressBar=document.getElementById('progressBar');
-  const progressSpan=progressBar.querySelector('span');
-  const statusBadge=document.getElementById('statusBadge');
-  const messageEl=document.getElementById('message');
-  const jobIdEl=document.getElementById('jobId');
-  const signingTimeEl=document.getElementById('signingTime');
-  const certNameEl=document.getElementById('certName');
-  const certStatusEl=document.getElementById('certStatus');
-  const bundleInfoEl=document.getElementById('bundleInfo');
-  const appSizeEl=document.getElementById('appSize');
-  const downloadUrlBtn=document.getElementById('downloadUrl');
-  const manifestUrlBtn=document.getElementById('manifestUrl');
-  const installBtn=document.getElementById('installBtn');
-  const rawEl=document.getElementById('raw');
-  const exampleBtn=document.getElementById('exampleBtn');
-  const modeFileBtn=document.getElementById('modeFile');
-  const modeUrlBtn=document.getElementById('modeUrl');
-  const fileBlock=document.getElementById('fileBlock');
-  const urlBlock=document.getElementById('urlBlock');
-  const mobileToggle=document.getElementById('mobileToggle');
-  const mobileDetails=document.getElementById('mobileDetails');
-
-  let useFile=true;
+  const ENDPOINT = 'https://cococloud-signing.online/api/v2/free-enterprise/sign';
+  const fileInput = document.getElementById('ipaFile');
+  const ipaUrlInput = document.getElementById('ipaUrl');
+  const bundleIdInput = document.getElementById('bundleId');
+  const bundleNameInput = document.getElementById('bundleName');
+  const bypassCheckbox = document.getElementById('bypass');
+  const submitBtn = document.getElementById('submitBtn');
+  const apiKeyInput = document.getElementById('apiKey');
+  const clearBtn = document.getElementById('clearFile');
+  const progressBar = document.getElementById('progressBar');
+  const progressSpan = progressBar.querySelector('span');
+  const statusBadge = document.getElementById('statusBadge');
+  const messageEl = document.getElementById('message');
+  const jobIdEl = document.getElementById('jobId');
+  const signingTimeEl = document.getElementById('signingTime');
+  const certNameEl = document.getElementById('certName');
+  const certStatusEl = document.getElementById('certStatus');
+  const bundleInfoEl = document.getElementById('bundleInfo');
+  const appSizeEl = document.getElementById('appSize');
+  const downloadUrlBtn = document.getElementById('downloadUrl');
+  const manifestUrlBtn = document.getElementById('manifestUrl');
+  const installBtn = document.getElementById('installBtn');
+  const rawEl = document.getElementById('raw');
+  const exampleBtn = document.getElementById('exampleBtn');
+  const modeFileBtn = document.getElementById('modeFile');
+  const modeUrlBtn = document.getElementById('modeUrl');
+  const fileBlock = document.getElementById('fileBlock');
+  const urlBlock = document.getElementById('urlBlock');
+  const mobileToggle = document.getElementById('mobileToggle');
+  const mobileDetails = document.getElementById('mobileDetails');
+  let useFile = true;
   function switchToFile(){
-    useFile=true;
-    fileBlock.style.display='';
-    urlBlock.style.display='none';
+    useFile = true;
+    fileBlock.style.display = '';
+    urlBlock.style.display = 'none';
     modeFileBtn.classList.remove('btn-ghost');
     modeFileBtn.classList.add('btn');
     modeUrlBtn.classList.remove('btn');
     modeUrlBtn.classList.add('btn-ghost');
   }
   function switchToUrl(){
-    useFile=false;
-    fileBlock.style.display='none';
-    urlBlock.style.display='';
+    useFile = false;
+    fileBlock.style.display = 'none';
+    urlBlock.style.display = '';
     modeUrlBtn.classList.remove('btn-ghost');
     modeUrlBtn.classList.add('btn');
     modeFileBtn.classList.remove('btn');
     modeFileBtn.classList.add('btn-ghost');
   }
-  modeFileBtn.addEventListener('click',switchToFile);
-  modeUrlBtn.addEventListener('click',switchToUrl);
-  mobileToggle.addEventListener('click',()=>{
-    const expanded=mobileToggle.getAttribute('aria-expanded')==='true';
-    mobileToggle.setAttribute('aria-expanded',String(!expanded));
-    if(expanded){
-      mobileDetails.style.display='none';
-      mobileToggle.textContent='Details';
-    }else{
-      mobileDetails.style.display='block';
-      mobileToggle.textContent='Hide';
+  modeFileBtn.addEventListener('click', switchToFile);
+  modeUrlBtn.addEventListener('click', switchToUrl);
+  mobileToggle.addEventListener('click', () => {
+    const expanded = mobileToggle.getAttribute('aria-expanded') === 'true';
+    mobileToggle.setAttribute('aria-expanded', String(!expanded));
+    if (expanded) {
+      mobileDetails.style.display = 'none';
+      mobileToggle.textContent = 'Details';
+    } else {
+      mobileDetails.style.display = 'block';
+      mobileToggle.textContent = 'Hide';
     }
   });
-  const fileDropLabel=document.querySelector('.file-drop');
-  if(fileDropLabel)fileDropLabel.addEventListener('click',()=>fileInput.click());
-  clearBtn.addEventListener('click',()=>{fileInput.value='';ipaUrlInput.value='';});
-  exampleBtn.addEventListener('click',()=>{
+  const fileDropLabel = document.querySelector('.file-drop');
+  if (fileDropLabel) fileDropLabel.addEventListener('click', () => fileInput.click());
+  clearBtn.addEventListener('click', () => {
+    fileInput.value = '';
+    if (ipaUrlInput) ipaUrlInput.value = '';
+  });
+  exampleBtn.addEventListener('click', () => {
     switchToUrl();
-    ipaUrlInput.value='https://example.com/app.ipa';
+    if (ipaUrlInput) ipaUrlInput.value = 'https://example.com/app.ipa';
   });
-  fileInput.addEventListener('change',()=>{
-    if(fileInput.files&&fileInput.files[0])ipaUrlInput.value='';
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files && fileInput.files[0]) {
+      if (ipaUrlInput) ipaUrlInput.value = '';
+    }
   });
-  function setStatus(text,cls){
-    statusBadge.textContent=text;
-    if(cls==='ok'){
-      statusBadge.style.background='linear-gradient(90deg,#7afff0,#ff76d6)';
-      statusBadge.style.color='#07141a';
-    }else if(cls==='error'){
-      statusBadge.style.background='linear-gradient(90deg,#ff8c8c,#ff3f3f)';
-      statusBadge.style.color='#120000';
-    }else{
-      statusBadge.style.background='';
-      statusBadge.style.color='';
+  function setStatus(text, colorClass) {
+    statusBadge.textContent = text;
+    if (colorClass === 'ok') {
+      statusBadge.style.background = 'linear-gradient(90deg,#7afff0,#ff76d6)';
+      statusBadge.style.color = '#07141a';
+    } else if (colorClass === 'error') {
+      statusBadge.style.background = 'linear-gradient(90deg,#ff8c8c,#ff3f3f)';
+      statusBadge.style.color = '#120000';
+    } else {
+      statusBadge.style.background = '';
+      statusBadge.style.color = '';
     }
   }
-  function resetResult(){
-    messageEl.textContent='—';
-    jobIdEl.textContent='—';
-    signingTimeEl.textContent='—';
-    certNameEl.textContent='—';
-    certStatusEl.innerHTML='';
-    bundleInfoEl.textContent='—';
-    appSizeEl.textContent='';
-    downloadUrlBtn.style.display='none';
-    manifestUrlBtn.style.display='none';
-    installBtn.style.display='none';
-    rawEl.textContent='—';
-    setStatus('Idle','');
+  function resetResult() {
+    messageEl.textContent = '—';
+    jobIdEl.textContent = '—';
+    signingTimeEl.textContent = '—';
+    certNameEl.textContent = '—';
+    certStatusEl.innerHTML = '';
+    bundleInfoEl.textContent = '—';
+    appSizeEl.textContent = '';
+    downloadUrlBtn.style.display = 'none';
+    manifestUrlBtn.style.display = 'none';
+    installBtn.style.display = 'none';
+    rawEl.textContent = '—';
+    setStatus('Idle', '');
   }
   resetResult();
-  submitBtn.addEventListener('click',async()=>{
+  submitBtn.addEventListener('click', async () => {
     resetResult();
-    const apiKey=apiKeyInput.value.trim();
-    if(!apiKey){alert('Please provide an API Key');return;}
-    const form=new FormData();
-    const file=fileInput.files&&fileInput.files[0];
-    const url=ipaUrlInput.value.trim();
-    if(useFile&&!file){alert('Please upload an .ipa file.');return;}
-    if(!useFile&&!url){alert('Please provide an .ipa download URL.');return;}
-    if(useFile)form.append('ipa',file,file.name);
-    else form.append('ipa',url);
-    if(bundleIdInput.value.trim())form.append('bundleId',bundleIdInput.value.trim());
-    if(bundleNameInput.value.trim())form.append('bundleName',bundleNameInput.value.trim());
-    form.append('bypassapplerevokes',bypassCheckbox.checked?'true':'0');
-    setStatus('Uploading…','');
-    progressBar.style.display='block';
-    progressSpan.style.width='10%';
-    submitBtn.disabled=true;
-    try{
-      let responseJson=null;
-      if(useFile&&file){
-        responseJson=await new Promise((res,rej)=>{
-          const xhr=new XMLHttpRequest();
-          xhr.open('POST',ENDPOINT,true);
-          xhr.setRequestHeader('X-API-Key',apiKey);
-          xhr.upload.onprogress=e=>{
-            if(e.lengthComputable){
-              const pct=Math.round((e.loaded/e.total)*80);
-              progressSpan.style.width=pct+'%';
+    const apiKey = apiKeyInput.value.trim();
+    if (!apiKey) { alert('Please provide an API Key'); return; }
+    const form = new FormData();
+    const file = fileInput.files && fileInput.files[0];
+    const url = ipaUrlInput ? ipaUrlInput.value.trim() : '';
+    if (useFile && !file) {
+      alert('Please upload an .ipa file.');
+      return;
+    }
+    if (!useFile && !url) {
+      alert('Please provide an .ipa download URL.');
+      return;
+    }
+    if (useFile) {
+      form.append('ipa', file, file.name);
+    } else {
+      form.append('ipa', url);
+    }
+    if (bundleIdInput.value.trim()) form.append('bundleId', bundleIdInput.value.trim());
+    if (bundleNameInput.value.trim()) form.append('bundleName', bundleNameInput.value.trim());
+    form.append('bypassapplerevokes', bypassCheckbox.checked ? 'true' : '0');
+    setStatus('Uploading…', '');
+    progressBar.style.display = 'block';
+    progressSpan.style.width = '10%';
+    submitBtn.disabled = true;
+    try {
+      let responseJson = null;
+      if (useFile && file) {
+        responseJson = await new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', ENDPOINT, true);
+          xhr.setRequestHeader('X-API-Key', apiKey);
+          xhr.upload.onprogress = function(e){
+            if (e.lengthComputable) {
+              const pct = Math.round((e.loaded / e.total) * 80);
+              progressSpan.style.width = pct + '%';
             }
           };
-          xhr.onload=()=>{progressSpan.style.width='95%';try{res(JSON.parse(xhr.responseText))}catch{rej(new Error('Invalid JSON'))}};
-          xhr.onerror=()=>rej(new Error('Network error'));
+          xhr.onload = function(){
+            progressSpan.style.width = '95%';
+            try {
+              const json = JSON.parse(xhr.responseText);
+              resolve(json);
+            } catch (err) {
+              reject(new Error('Invalid JSON response from API'));
+            }
+          };
+          xhr.onerror = function(){ reject(new Error('Network error during upload')); };
           xhr.send(form);
         });
-      }else{
-        progressSpan.style.width='30%';
-        const resp=await fetch(ENDPOINT,{method:'POST',headers:{'X-API-Key':apiKey},body:form});
-        progressSpan.style.width='90%';
-        responseJson=await resp.json();
+      } else {
+        progressSpan.style.width = '30%';
+        const fetchResp = await fetch(ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'X-API-Key': apiKey
+          },
+          body: form
+        });
+        progressSpan.style.width = '90%';
+        responseJson = await fetchResp.json();
       }
-      progressSpan.style.width='100%';
+      progressSpan.style.width = '100%';
       setTimeout(()=>progressBar.style.display='none',300);
-      rawEl.textContent=JSON.stringify(responseJson,null,2);
-      if(responseJson.success){
-        setStatus('Success','ok');
-        messageEl.textContent=responseJson.message||'IPA signed successfully';
-        jobIdEl.textContent=responseJson.jobId||'—';
-        signingTimeEl.textContent=responseJson.signingTime||'—';
-        const ai=responseJson.appInfo||{};
-        bundleInfoEl.textContent=(ai.bundleName?ai.bundleName+' • ':'')+(ai.bundleId||'—');
-        appSizeEl.textContent=responseJson.appSize?`in: ${responseJson.appSize.input} / out: ${responseJson.appSize.output}`:'';
-        const cert=responseJson.certificate_info||{};
-        certNameEl.textContent=cert.cert_name||'—';
-        if(cert.cer_status&&cert.cer_status.toLowerCase()==='revoked'){
-          certStatusEl.innerHTML=`<div class="revoked">Revoked${cert.revoked_from?' • '+new Date(cert.revoked_from).toLocaleString():''}</div>`;
-        }else if(cert.cer_status){
-          certStatusEl.innerHTML=`<div class="badge">${cert.cer_status}</div>`;
+      rawEl.textContent = JSON.stringify(responseJson, null, 2);
+      if (responseJson && responseJson.success) {
+        setStatus('Success', 'ok');
+        messageEl.textContent = responseJson.message || 'IPA signed successfully';
+        jobIdEl.textContent = responseJson.jobId || '—';
+        signingTimeEl.textContent = responseJson.signingTime || '—';
+        const ai = responseJson.appInfo || {};
+        bundleInfoEl.textContent = (ai.bundleName ? ai.bundleName + ' • ' : '') + (ai.bundleId || '—');
+        appSizeEl.textContent = responseJson.appSize ? `in: ${responseJson.appSize.input} / out: ${responseJson.appSize.output}` : '';
+        const cert = responseJson.certificate_info || {};
+        certNameEl.textContent = cert.cert_name || '—';
+        if (cert.cer_status && cert.cer_status.toLowerCase() === 'revoked') {
+          certStatusEl.innerHTML = '<div class="revoked">Revoked' + (cert.revoked_from ? ' • ' + new Date(cert.revoked_from).toLocaleString() : '') + '</div>';
+        } else if (cert.cer_status) {
+          certStatusEl.innerHTML = '<div class="badge">' + cert.cer_status + '</div>';
+        } else {
+          certStatusEl.innerHTML = '';
         }
-        if(responseJson.downloadUrl){downloadUrlBtn.href=responseJson.downloadUrl;downloadUrlBtn.style.display='inline-block'}
-        if(responseJson.manifestUrl){manifestUrlBtn.href=responseJson.manifestUrl;manifestUrlBtn.style.display='inline-block'}
-        if(responseJson.itmsServicesUrl){
-          installBtn.style.display='inline-block';
-          installBtn.onclick=()=>{window.location.href=responseJson.itmsServicesUrl}
+        if (responseJson.downloadUrl) {
+          downloadUrlBtn.href = responseJson.downloadUrl;
+          downloadUrlBtn.style.display = 'inline-block';
         }
-      }else if(responseJson.error){
-        setStatus('Error','error');
-        messageEl.textContent=responseJson.error;
-      }else{
-        setStatus('Unknown','error');
-        messageEl.textContent='Unexpected response';
+        if (responseJson.manifestUrl) {
+          manifestUrlBtn.href = responseJson.manifestUrl;
+          manifestUrlBtn.style.display = 'inline-block';
+        }
+        if (responseJson.itmsServicesUrl) {
+          installBtn.style.display = 'inline-block';
+          installBtn.onclick = function(){
+            window.location.href = responseJson.itmsServicesUrl;
+          }
+        }
+      } else if (responseJson && responseJson.error) {
+        setStatus('Error', 'error');
+        messageEl.textContent = responseJson.error;
+        if (responseJson.error.toLowerCase().includes('file size')) {
+          messageEl.textContent += ' — File size exceeds plan limit.';
+        } else if (responseJson.error.toLowerCase().includes('mobileprovision')) {
+          messageEl.textContent += ' — Unauthorized mobileprovision.';
+        }
+      } else {
+        setStatus('Unknown response', 'error');
+        messageEl.textContent = 'Unexpected response';
       }
-    }catch(err){
-      setStatus('Network/Error','error');
-      messageEl.textContent=err.message||'An error occurred';
-      rawEl.textContent=err.stack||String(err);
-    }finally{
-      submitBtn.disabled=false;
-      progressBar.style.display='none';
-      progressSpan.style.width='0%';
+    } catch (err) {
+      setStatus('Network/Error', 'error');
+      messageEl.textContent = err.message || 'An error occurred';
+      rawEl.textContent = err.stack || String(err);
+    } finally {
+      submitBtn.disabled = false;
+      progressBar.style.display = 'none';
+      progressSpan.style.width = '0%';
     }
   });
 </script>
