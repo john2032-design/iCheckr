@@ -1,1 +1,0 @@
-export const MAX_IPA_BYTES = 1181116006;
