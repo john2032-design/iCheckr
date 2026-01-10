@@ -3,10 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+
   <title>iCheckr - IPA Signer</title>
 
-  <!-- Google font for a modern rounded look -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- Favicon / Icon -->
+  <link rel="icon" type="image/png" sizes="256x256" href="https://raw.githubusercontent.com/john2032-design/iCheckr/refs/heads/main/562B424C-4E28-41A0-AB8C-589C5F25D7B5.png">
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/john2032-design/iCheckr/refs/heads/main/562B424C-4E28-41A0-AB8C-589C5F25D7B5.png">
+
+  <!-- Twitter Card -->
+  <meta name="theme-color" content="#7afcff">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="iCheckr - IPA Signer">
+  <meta name="twitter:description" content="Sign iOS IPA files quickly with our pre-configured enterprise certificate.">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/john2032-design/iCheckr/refs/heads/main/562B424C-4E28-41A0-AB8C-589C5F25D7B5.png">
+  <meta name="twitter:url" content="https://icheckr.pages.dev">
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -14,10 +27,8 @@
       --bg2: #6b2bff;
       --accent: #7afcff;
       --accent2: #ff76d6;
-      --card: rgba(255,255,255,0.06);
-      --glass: rgba(255,255,255,0.03);
-      --neon: #7afcff;
-      --button-glow: 0 8px 30px rgba(122,252,255,0.12);
+      --muted: rgba(230,230,255,0.7);
+      --card-radius: 12px;
     }
     html,body{height:100%;margin:0;font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
     body{
@@ -29,92 +40,94 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:40px;
+      padding:18px;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
       overflow:auto;
+      min-height:100vh;
     }
 
     .container{
       width:100%;
       max-width:1100px;
       background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:18px;
-      padding:28px;
+      border-radius:16px;
+      padding:18px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 80px rgba(122,252,255,0.03);
       border: 1px solid rgba(255,255,255,0.04);
       position:relative;
       overflow:hidden;
     }
 
-    /* decorative star grid */
     .container::before{
       content:"";
       position:absolute;
       inset:0;
       background-image:
-        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.03) 0.5px, transparent 0.5px),
-        radial-gradient(circle at 80% 60%, rgba(255,255,255,0.02) 0.6px, transparent 0.6px);
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.03) 0.6px, transparent 0.6px),
+        radial-gradient(circle at 80% 60%, rgba(255,255,255,0.02) 0.7px, transparent 0.7px);
       background-size: 40px 40px, 60px 60px;
       mix-blend-mode: overlay;
       pointer-events:none;
     }
 
-    header{
+    /* Desktop header */
+    .header {
       display:flex;
-      gap:20px;
+      gap:14px;
       align-items:center;
-      margin-bottom:18px;
+      margin-bottom:12px;
+      flex-wrap:wrap;
     }
 
     .logo {
-      width:96px;
-      height:96px;
-      border-radius:18px;
+      width:72px;
+      height:72px;
+      border-radius:14px;
       background: linear-gradient(135deg,var(--accent2),var(--accent));
       display:flex;
       align-items:center;
       justify-content:center;
-      color:#111;
+      color:#081221;
       font-weight:800;
-      font-size:28px;
+      font-size:22px;
       box-shadow: 0 8px 30px rgba(122,252,255,0.08);
       border: 1px solid rgba(255,255,255,0.08);
+      flex-shrink:0;
     }
 
     .title{
-      font-size:28px;
+      font-size:20px;
       font-weight:800;
-      letter-spacing:0.6px;
+      letter-spacing:0.4px;
+      line-height:1;
       background: linear-gradient(90deg, #e9f9ff, #ffd0ff);
       -webkit-background-clip:text;
       -webkit-text-fill-color:transparent;
     }
-
-    .subtitle{color:rgba(230,230,255,0.7);margin-top:4px;font-size:13px;}
+    .subtitle{color:var(--muted);margin-top:4px;font-size:12px}
 
     main{
       display:grid;
-      grid-template-columns: 1fr 380px;
-      gap:20px;
+      grid-template-columns: 1fr 360px;
+      gap:14px;
       align-items:start;
     }
 
-    /* left: form */
     .card{
       background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      padding:18px;
-      border-radius:12px;
+      padding:12px;
+      border-radius:var(--card-radius);
       border:1px solid rgba(255,255,255,0.03);
       box-shadow: 0 6px 20px rgba(0,0,0,0.45);
     }
 
-    label{display:block;font-size:13px;color:rgba(230,230,255,0.8);margin-bottom:6px}
-    .field{margin-bottom:14px}
+    label{display:block;font-size:13px;color:rgba(230,230,255,0.88);margin-bottom:6px}
+    .field{margin-bottom:10px}
 
     input[type="text"], input[type="url"], .file-drop {
       width:100%;
-      padding:12px 14px;
+      padding:11px 12px;
       border-radius:10px;
       border:1px solid rgba(255,255,255,0.06);
       background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
@@ -123,33 +136,36 @@
       outline:none;
     }
 
-    .file-row{display:flex;gap:10px;align-items:center;}
+    .file-row{display:flex;gap:8px;align-items:center;}
     .file-drop{
       flex:1;
-      min-height:56px;
+      min-height:52px;
       display:flex;
       align-items:center;
       justify-content:center;
       text-align:center;
       cursor:pointer;
+      user-select:none;
     }
 
     .btn{
       display:inline-flex;
-      gap:10px;
+      gap:8px;
       align-items:center;
       justify-content:center;
-      padding:10px 16px;
+      padding:9px 12px;
       border-radius:10px;
       border: none;
       cursor:pointer;
       font-weight:600;
       color:#081221;
       background: linear-gradient(90deg, var(--accent), var(--accent2));
-      box-shadow: var(--button-glow);
-      transition: transform .12s ease, box-shadow .12s ease;
+      box-shadow: 0 8px 30px rgba(122,252,255,0.12);
+      transition: transform .12s ease, box-shadow .12s ease, opacity .12s;
+      font-size:14px;
     }
     .btn:active{transform:translateY(1px)}
+    .btn[disabled]{opacity:0.6;cursor:default}
 
     .btn-ghost{
       background:transparent;
@@ -158,11 +174,11 @@
       box-shadow:none;
     }
 
-    .small{font-size:13px;color:rgba(230,230,255,0.75)}
+    .small{font-size:13px;color:var(--muted)}
 
     .options{
       display:flex;
-      gap:10px;
+      gap:8px;
       flex-wrap:wrap;
       align-items:center;
     }
@@ -176,15 +192,14 @@
     }
     .checkbox input{width:16px;height:16px}
 
-    /* right: status panel */
     .status {
       position:sticky;
-      top:28px;
+      top:16px;
       height: fit-content;
     }
 
     .info-block{
-      padding:14px;
+      padding:12px;
       border-radius:12px;
       background: linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.008));
       border:1px solid rgba(255,255,255,0.03);
@@ -211,12 +226,7 @@
       padding:8px 10px;
       border-radius:10px;
       font-weight:700;
-    }
-
-    .link{
-      color:var(--accent);
-      text-decoration:underline;
-      cursor:pointer;
+      font-size:13px;
     }
 
     pre{white-space:pre-wrap;font-size:13px;color:rgba(200,200,255,0.95);}
@@ -229,56 +239,122 @@
     }
     .progress > span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .25s ease}
 
-    footer{margin-top:16px;color:rgba(230,230,255,0.55);font-size:13px}
-    .note{background:rgba(255,255,255,0.02);padding:10px;border-radius:10px;margin-top:10px;color:rgba(240,240,255,0.8);font-size:13px}
+    footer{margin-top:12px;color:rgba(230,230,255,0.55);font-size:13px}
 
-    @media(max-width:980px){
-      main{grid-template-columns:1fr; }
+    /* Compact mobile header (sticky top) */
+    .mobile-top {
+      display:none;
+      position:sticky;
+      top:0;
+      z-index:40;
+      width:100%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+      border-bottom:1px solid rgba(255,255,255,0.03);
+      padding:8px 12px;
+      align-items:center;
+      gap:8px;
+    }
+    .mobile-top .m-logo{width:40px;height:40px;border-radius:8px;flex-shrink:0;overflow:hidden}
+    .mobile-top .m-title{font-weight:700;font-size:16px;line-height:1;margin-left:6px}
+    .mobile-top .m-toggle{margin-left:auto;background:transparent;border:0;color:var(--accent);font-weight:700;padding:6px;border-radius:8px}
+
+    /* Responsive tweaks */
+    @media(max-width:1000px){
+      main{grid-template-columns:1fr 320px;}
+      .logo{width:64px;height:64px}
+      .title{font-size:18px}
+    }
+    @media(max-width:820px){
+      /* show mobile top bar */
+      .mobile-top{display:flex}
+      .header{display:none}
+      .container{padding:10px}
+      main{grid-template-columns:1fr;gap:12px}
       .status{position:static}
-      header{justify-content:center;text-align:center;flex-direction:column}
+      .card{padding:10px}
+      .logo{display:none}
+    }
+    @media(max-width:420px){
+      .mobile-top{padding:8px}
+      .m-title{font-size:15px}
+      .btn{padding:8px 10px;font-size:13px}
+      input[type="text"], input[type="url"], .file-drop{padding:10px;font-size:13px}
     }
   </style>
 </head>
 <body>
+  <!-- Mobile compact sticky header -->
+  <div class="mobile-top" id="mobileTop" aria-hidden="false">
+    <div class="m-logo">
+      <img src="https://raw.githubusercontent.com/john2032-design/iCheckr/refs/heads/main/562B424C-4E28-41A0-AB8C-589C5F25D7B5.png"
+           alt="iCheckr" style="width:100%;height:100%;object-fit:cover;border-radius:6px">
+    </div>
+    <div style="display:flex;flex-direction:column;min-width:0">
+      <div class="m-title">iCheckr — IPA Signer</div>
+      <div id="mobileDetails" style="font-size:12px;color:var(--muted);margin-top:3px;display:none">Sign iOS IPA files • 10,000 reqs/week</div>
+    </div>
+    <button id="mobileToggle" class="m-toggle" aria-expanded="false" aria-controls="mobileDetails">Details</button>
+  </div>
+
   <div class="container" role="main">
-    <header>
-      <div class="logo">iC</div>
-      <div>
-        <div class="title">iCheckr <span style="font-weight:600;color:rgba(255,255,255,0.8);font-size:14px">- IPA Signer</span></div>
-        <div class="subtitle">Sign iOS IPA files quickly with our pre-configured enterprise cert.<span class="small"> Note: Standard users limited to 10,000 requests/week.</span></div>
+    <!-- Desktop header (hidden on mobile) -->
+    <div class="header" role="banner">
+      <div class="logo" aria-hidden="true">
+        <img src="https://raw.githubusercontent.com/john2032-design/iCheckr/refs/heads/main/562B424C-4E28-41A0-AB8C-589C5F25D7B5.png"
+             alt="iCheckr" style="width:92%;height:92%;object-fit:contain;border-radius:10px">
       </div>
-    </header>
+
+      <div style="min-width:0">
+        <div class="title">iCheckr <span style="font-weight:600;color:rgba(255,255,255,0.85);font-size:12px">- IPA Signer</span></div>
+        <div class="subtitle">Sign iOS IPA files quickly with our pre-configured enterprise certificate. <span class="small">Limit: 10,000 reqs/week (Standard)</span></div>
+      </div>
+    </div>
 
     <main>
       <section class="card" aria-label="Sign IPA">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-          <div style="font-weight:700;font-size:16px">Sign an IPA</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:10px">
+          <div style="font-weight:700;font-size:15px">Sign an IPA</div>
           <div class="small">Endpoint: <span style="color:var(--accent)">POST /api/v2/free-enterprise/sign</span></div>
         </div>
 
         <div class="field">
-          <label for="apiKey">API Key (defaults from pasted docs)</label>
+          <label for="apiKey">API Key</label>
           <input id="apiKey" type="text" value="sk_ESBI30Eq65EPCnDia28EQn5irepova6q1sZYv7WI" />
         </div>
 
-        <div class="field">
-          <label>Upload IPA file or provide a direct URL</label>
+        <!-- Mode toggle -->
+        <div class="field" style="display:flex;gap:8px;align-items:center">
+          <div style="flex:1">
+            <label class="small" style="margin-bottom:6px">Upload mode</label>
+            <div style="display:flex;gap:8px">
+              <button id="modeFile" class="btn" style="flex:1;background:linear-gradient(90deg,var(--accent),var(--accent2));">Choose File</button>
+              <button id="modeUrl" class="btn btn-ghost" style="flex:1">Use URL</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- File chooser -->
+        <div class="field" id="fileBlock">
+          <label>Upload IPA file</label>
           <div class="file-row">
-            <label class="file-drop" for="ipaFile">
+            <label class="file-drop" for="ipaFile" aria-hidden="true">
               <input id="ipaFile" type="file" accept=".ipa" style="display:none" />
               <div style="pointer-events:none">
-                <div style="font-weight:700">Click to choose .ipa</div>
-                <div class="small">or paste URL in the box</div>
+                <div style="font-weight:700">Tap to choose .ipa</div>
+                <div class="small">Supported: .ipa</div>
               </div>
             </label>
             <button id="clearFile" class="btn btn-ghost" title="Clear file">Clear</button>
           </div>
-          <div style="margin-top:8px">
-            <input id="ipaUrl" type="url" placeholder="https://example.com/app.ipa (optional — used if no file uploaded)" />
-          </div>
         </div>
 
-        <div class="field options">
+        <!-- URL input (hidden by default) -->
+        <div class="field" id="urlBlock" style="display:none">
+          <label for="ipaUrl">IPA direct download URL</label>
+          <input id="ipaUrl" type="url" placeholder="https://example.com/app.ipa" />
+        </div>
+
+        <div class="field options" style="margin-top:6px">
           <div style="flex:1">
             <label for="bundleId">New Bundle ID (optional)</label>
             <input id="bundleId" type="text" placeholder="com.example.app" />
@@ -293,17 +369,13 @@
           <label class="checkbox"><input id="bypass" type="checkbox" checked /> Use Apple bypass revokes (bypassapplerevokes)</label>
         </div>
 
-        <div style="display:flex;gap:10px;align-items:center">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
           <button id="submitBtn" class="btn">Sign IPA</button>
           <button id="exampleBtn" class="btn btn-ghost">Example .ipa URL</button>
-          <div class="small" id="limitNote">Limit: 10,000 requests / week (Standard)</div>
+          <div class="small" id="limitNote">10,000 reqs / week (Standard)</div>
         </div>
 
         <div class="progress" style="margin-top:12px;display:none" id="progressBar"><span></span></div>
-
-        <div class="note" style="margin-top:12px">
-          <strong>Security note:</strong> Embedding an API key in client-side code is insecure. For public deployment, run the request from a small server-side proxy to keep your key secret.
-        </div>
       </section>
 
       <aside class="status">
@@ -316,7 +388,7 @@
             <div id="statusBadge" class="badge">Idle</div>
           </div>
 
-          <div style="margin-top:12px">
+          <div style="margin-top:10px">
             <div class="result-field"><div class="muted">Message</div><div id="message" class="strong">—</div></div>
             <div class="result-field"><div class="muted">Job ID</div><div id="jobId" class="muted">—</div></div>
             <div class="result-field"><div class="muted">Signing Time</div><div id="signingTime" class="muted">—</div></div>
@@ -349,18 +421,8 @@
           </div>
         </div>
 
-        <div class="info-block" style="margin-top:14px">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div style="font-weight:700">Errors & Limits</div>
-            <div class="muted">Handled</div>
-          </div>
-          <div style="margin-top:8px" class="small">
-            File size limits and unauthorized mobileprovision messages from the API will be shown here if returned.
-          </div>
-        </div>
-
         <footer>
-          <div style="margin-top:10px;font-size:13px">Made with ❤️ — iCheckr • Keep your API key safe</div>
+          <div style="margin-top:10px;font-size:13px">Made with ❤️ — iCheckr</div>
         </footer>
       </aside>
     </main>
@@ -395,21 +457,71 @@
   const rawEl = document.getElementById('raw');
   const exampleBtn = document.getElementById('exampleBtn');
 
-  // Click label to open file chooser
-  document.querySelector('.file-drop').addEventListener('click', () => fileInput.click());
+  // Mode toggles
+  const modeFileBtn = document.getElementById('modeFile');
+  const modeUrlBtn = document.getElementById('modeUrl');
+  const fileBlock = document.getElementById('fileBlock');
+  const urlBlock = document.getElementById('urlBlock');
+
+  // Mobile header toggle
+  const mobileToggle = document.getElementById('mobileToggle');
+  const mobileDetails = document.getElementById('mobileDetails');
+
+  // Initial mode = file
+  let useFile = true;
+
+  function switchToFile(){
+    useFile = true;
+    fileBlock.style.display = '';
+    urlBlock.style.display = 'none';
+    modeFileBtn.classList.remove('btn-ghost');
+    modeFileBtn.classList.add('btn');
+    modeUrlBtn.classList.remove('btn');
+    modeUrlBtn.classList.add('btn-ghost');
+  }
+  function switchToUrl(){
+    useFile = false;
+    fileBlock.style.display = 'none';
+    urlBlock.style.display = '';
+    modeUrlBtn.classList.remove('btn-ghost');
+    modeUrlBtn.classList.add('btn');
+    modeFileBtn.classList.remove('btn');
+    modeFileBtn.classList.add('btn-ghost');
+  }
+
+  modeFileBtn.addEventListener('click', switchToFile);
+  modeUrlBtn.addEventListener('click', switchToUrl);
+
+  // Mobile details toggle behavior
+  mobileToggle.addEventListener('click', () => {
+    const expanded = mobileToggle.getAttribute('aria-expanded') === 'true';
+    mobileToggle.setAttribute('aria-expanded', String(!expanded));
+    if (expanded) {
+      mobileDetails.style.display = 'none';
+      mobileToggle.textContent = 'Details';
+    } else {
+      mobileDetails.style.display = 'block';
+      mobileToggle.textContent = 'Hide';
+    }
+  });
+
+  // File controls
+  const fileDropLabel = document.querySelector('.file-drop');
+  if (fileDropLabel) fileDropLabel.addEventListener('click', () => fileInput.click());
 
   clearBtn.addEventListener('click', () => {
     fileInput.value = '';
-    ipaUrlInput.value = '';
+    if (ipaUrlInput) ipaUrlInput.value = '';
   });
 
   exampleBtn.addEventListener('click', () => {
-    ipaUrlInput.value = 'https://example.com/app.ipa';
+    switchToUrl();
+    if (ipaUrlInput) ipaUrlInput.value = 'https://example.com/app.ipa';
   });
 
   fileInput.addEventListener('change', () => {
     if (fileInput.files && fileInput.files[0]) {
-      ipaUrlInput.value = ''; // prefer file
+      if (ipaUrlInput) ipaUrlInput.value = ''; // prefer file
     }
   });
 
@@ -445,21 +557,24 @@
   resetResult();
 
   submitBtn.addEventListener('click', async () => {
-    // Prepare request
     resetResult();
     const apiKey = apiKeyInput.value.trim();
     if (!apiKey) { alert('Please provide an API Key'); return; }
 
     const form = new FormData();
     const file = fileInput.files && fileInput.files[0];
-    const url = ipaUrlInput.value.trim();
+    const url = ipaUrlInput ? ipaUrlInput.value.trim() : '';
 
-    if (!file && !url) {
-      alert('Please upload an .ipa file or provide a direct .ipa URL.');
+    if (useFile && !file) {
+      alert('Please upload an .ipa file.');
+      return;
+    }
+    if (!useFile && !url) {
+      alert('Please provide an .ipa download URL.');
       return;
     }
 
-    if (file) {
+    if (useFile) {
       form.append('ipa', file, file.name);
     } else {
       form.append('ipa', url);
@@ -467,22 +582,17 @@
 
     if (bundleIdInput.value.trim()) form.append('bundleId', bundleIdInput.value.trim());
     if (bundleNameInput.value.trim()) form.append('bundleName', bundleNameInput.value.trim());
-
-    // bypassapplerevokes: set to 'true' or '1' (default true per docs)
     form.append('bypassapplerevokes', bypassCheckbox.checked ? 'true' : '0');
 
-    // UI
     setStatus('Uploading…', '');
     progressBar.style.display = 'block';
     progressSpan.style.width = '10%';
-
     submitBtn.disabled = true;
 
     try {
-      // Use fetch with manual progress if file upload - create XMLHttpRequest for progress events.
       let responseJson = null;
-      if (file) {
-        // Use XHR to track upload progress
+      if (useFile && file) {
+        // XHR for progress
         responseJson = await new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
           xhr.open('POST', ENDPOINT, true);
@@ -490,7 +600,7 @@
 
           xhr.upload.onprogress = function(e){
             if (e.lengthComputable) {
-              const pct = Math.round((e.loaded / e.total) * 80); // 80% reserved for upload
+              const pct = Math.round((e.loaded / e.total) * 80);
               progressSpan.style.width = pct + '%';
             }
           };
@@ -510,7 +620,7 @@
           xhr.send(form);
         });
       } else {
-        // If using URL (no upload), use fetch
+        // fetch when URL mode
         progressSpan.style.width = '30%';
         const fetchResp = await fetch(ENDPOINT, {
           method: 'POST',
@@ -523,7 +633,6 @@
         responseJson = await fetchResp.json();
       }
 
-      // Process API response
       progressSpan.style.width = '100%';
       setTimeout(()=>progressBar.style.display='none',300);
 
@@ -535,12 +644,10 @@
         jobIdEl.textContent = responseJson.jobId || '—';
         signingTimeEl.textContent = responseJson.signingTime || '—';
 
-        // App info
         const ai = responseJson.appInfo || {};
         bundleInfoEl.textContent = (ai.bundleName ? ai.bundleName + ' • ' : '') + (ai.bundleId || '—');
         appSizeEl.textContent = responseJson.appSize ? `in: ${responseJson.appSize.input} / out: ${responseJson.appSize.output}` : '';
 
-        // Certificate info
         const cert = responseJson.certificate_info || {};
         certNameEl.textContent = cert.cert_name || '—';
         if (cert.cer_status && cert.cer_status.toLowerCase() === 'revoked') {
@@ -551,7 +658,6 @@
           certStatusEl.innerHTML = '';
         }
 
-        // Links
         if (responseJson.downloadUrl) {
           downloadUrlBtn.href = responseJson.downloadUrl;
           downloadUrlBtn.style.display = 'inline-block';
@@ -564,23 +670,18 @@
         if (responseJson.itmsServicesUrl) {
           installBtn.style.display = 'inline-block';
           installBtn.onclick = function(){
-            // For itms-services, navigate the browser to the scheme URL
-            try {
-              window.location.href = responseJson.itmsServicesUrl;
-            } catch(e){
-              window.open(responseJson.itmsServicesUrl, '_blank');
-            }
+            // open the itms-services link
+            window.location.href = responseJson.itmsServicesUrl;
           }
         }
 
       } else if (responseJson.error) {
         setStatus('Error', 'error');
         messageEl.textContent = responseJson.error;
-        // show helpful error cases
         if (responseJson.error.toLowerCase().includes('file size')) {
-          messageEl.textContent += ' — File size exceeds your plan limit. Consider upgrading to Pro.';
+          messageEl.textContent += ' — File size exceeds plan limit.';
         } else if (responseJson.error.toLowerCase().includes('mobileprovision')) {
-          messageEl.textContent += ' — Standard users can only use the primary mobileprovision. Upgrade to Pro.';
+          messageEl.textContent += ' — Unauthorized mobileprovision.';
         }
       } else {
         setStatus('Unknown response', 'error');
